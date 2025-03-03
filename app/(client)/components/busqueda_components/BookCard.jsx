@@ -8,8 +8,7 @@ export default function BookCard({ book, filters }) {
                 backgroundPosition: "center",
             }}
         >
-            <div className="absolute inset-0 bg-black bg-opacity-75 flex items-center py-4 pl-6 pr-4 rounded-lg">
-                {/* Contenedor de la imagen con animación en hover */}
+            <div className="absolute inset-0 bg-black bg-opacity-75 flex items-center py-4 pl-7 pr-4 rounded-lg">
                 <div className="flex-shrink-0 transform transition-transform duration-300 ease-in-out group-hover:scale-110">
                     <img
                         src={book.Imagen}
@@ -21,15 +20,14 @@ export default function BookCard({ book, filters }) {
                         }}
                     />
                 </div>
-                {/* Contenedor del texto con animación en hover */}
                 <div
                     className="ml-8 text-white transform transition-transform duration-300 ease-in-out group-hover:scale-110"
                     style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.7)" }}
                 >
                     <h2 className="font-bold text-xl">{book.Titulo}</h2>
-                    {filters.authors && <p className="text-sm">Autor: {book["Autor(es)"]}</p>}
-                    {filters.series && <p className="text-sm">Serie: {book.Serie}</p>}
-                    {filters.isbn && <p className="text-sm">ISBN: {book.ISBN13}</p>}
+                    {filters?.authors && book["Autor(es)"] && <p className="text-sm">Autor: {book["Autor(es)"]}</p>}
+                    {filters?.series && <p className="text-sm">Serie: {book.Serie}</p>}
+                    {filters?.isbn && <p className="text-sm">ISBN: {book.ISBN13}</p>}
                 </div>
             </div>
         </div>
