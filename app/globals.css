@@ -1,0 +1,17 @@
+@import url('https://fonts.cdnfonts.com/css/telegraf');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&display=swap');
+
+/* Importar Tailwind */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Estilos globales */
+body {
+  @apply font-sans;
+  font-family: 'Montserrat', Arial, Helvetica, sans-serif;
+}
+
+h1, h2, h3, title {
+  font-family: 'Telegraf', sans-serif;
+}
