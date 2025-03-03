@@ -1,4 +1,4 @@
-"use client";  // 🔥 Necesario para usar `useState` y `useEffect`
+"use client";
 
 import { createContext, useState, useEffect, useContext } from "react";
 
@@ -14,8 +14,14 @@ export function UserProvider({ children }) {
     }
   }, []);
 
+  // 🔥 Función para cerrar sesión
+  const logout = () => {
+    setUser(null); // Eliminar usuario del estado global
+    localStorage.removeItem("user"); // Borrar usuario de localStorage
+  };
+
   return (
-    <UserContext.Provider value={{ user, setUser }}>
+    <UserContext.Provider value={{ user, setUser, logout }}>
       {children}
     </UserContext.Provider>
   );

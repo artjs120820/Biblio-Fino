@@ -33,9 +33,10 @@ export default function LoginForm({ setShowRegister, handleClose }) {
       setSuccessMessage("Inicio de sesión exitoso. Cerrando...");
       setTimeout(() => {
         handleClose();
-        localStorage.setItem("auth_token", dataUsuarioRetornada.token);
         localStorage.setItem("user", JSON.stringify(dataUsuarioRetornada.usuario));
 
+        const encodedUserInfo = btoa(JSON.stringify(dataUsuarioRetornada));
+        document.cookie = `auth_token=${encodedUserInfo}; path=/; max-age=86400; Secure`;
         setUser(dataUsuarioRetornada.usuario);
       }, 2000);
     } else {
