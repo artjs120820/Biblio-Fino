@@ -3,10 +3,12 @@
 import { useState } from "react";
 import { Menu, User } from "lucide-react";
 import LoginModal from "../../(empty)/login/page";
+import { useUser } from "../../context/UserContext"; 
+
 
 export default function Header({ setSidebarOpen, sidebarOpen }) {
     const [showLogin, setShowLogin] = useState(false);
-
+    const { user } = useUser(); 
     return (
         <>
             <header className="w-full bg-gray-900 text-white p-4">
@@ -21,13 +23,18 @@ export default function Header({ setSidebarOpen, sidebarOpen }) {
                                 }`}
                         />
                     </button>
+
                     <h1 className="text-xl font-semibold">Biblioteca</h1>
-                    {/* Botón de usuario con redirección */}
-                    <button onClick={() => setShowLogin(true)}>
-                        <User size={28} className="text-white cursor-pointer hover:text-gray-400 transition-colors" />
-                    </button>
+                    {user ? (
+                        <span className="text-white font-semibold">Bienvenido, {user.correo}</span>
+                    ) : (
+                        <button onClick={() => setShowLogin(true)}>
+                            <User size={28} className="text-white cursor-pointer hover:text-gray-400 transition-colors" />
+                        </button>
+                    )}
                 </nav>
             </header>
+
             <LoginModal showLogin={showLogin} setShowLogin={setShowLogin} />
         </>
     );

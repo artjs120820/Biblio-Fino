@@ -1,5 +1,6 @@
 import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css"
+import { UserProvider } from "./context/UserContext";
+import "./globals.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -12,15 +13,15 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: ".:: Milkynientos ::.",
-  description: "Líderes innovadores en marketing digital. Conectamos tu marca con las audiencias del futuro, impulsando tu presencia online hacia el éxito.orres",
+  title: "Milkynientos",
+  description: "Líderes innovadores en marketing digital.",
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body className={`  ${geistSans.variable} ${geistMono.variable} antialiased`}>
-        {children}
+    <html lang="es">
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <UserProvider>{children}</UserProvider>
       </body>
     </html>
   );

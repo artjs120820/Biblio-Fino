@@ -50,7 +50,7 @@ export default function LoginModal({ showLogin, setShowLogin }) {
         {showRegister ? (
           <RegisterForm setShowRegister={setShowRegister} />
         ) : (
-          <LoginForm setShowRegister={setShowRegister} />
+          <LoginForm setShowRegister={setShowRegister} handleClose={handleClose} />
         )}
       </div>
     </div>
