@@ -1,0 +1,61 @@
+export default function SearchPage({
+    searchTerm,
+    setSearchTerm,
+    filters,
+    setFilters,
+    handleClear,
+    handleSearch,
+  }) {
+    return (
+      <div>
+        <h1 className="text-2xl font-bold mb-4">Búsqueda</h1>
+        <div className="bg-blue-200 p-6 rounded-lg flex gap-8">
+          <div className="flex-[60%]">
+            <label className="block font-semibold mb-1" htmlFor="search">
+              Ingresa la palabra clave
+            </label>
+            <div className="relative">
+              <span className="absolute inset-y-0 left-3 flex items-center text-gray-600">
+                🔍
+              </span>
+              <input
+                id="search"
+                type="text"
+                placeholder="Buscar..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full border rounded-md pl-10 p-2 focus:outline-none focus:ring-2 focus:ring-gray-500"
+              />
+            </div>
+          </div>
+          <div className="flex-[40%] flex flex-col">
+            <div className="mb-4">
+              <p className="font-semibold">Incluir búsqueda en:</p>
+              <div className="flex flex-col gap-2 mt-2">
+                {["authors", "series", "isbn"].map((key) => (
+                  <label key={key} className="flex items-center">
+                    <input
+                      type="checkbox"
+                      className="mr-2"
+                      checked={filters[key]}
+                      onChange={() => setFilters({ ...filters, [key]: !filters[key] })}
+                    />
+                    {key.charAt(0).toUpperCase() + key.slice(1)}
+                  </label>
+                ))}
+              </div>
+            </div>
+            <div className="flex gap-4">
+              <button onClick={handleClear} className="bg-slate-500 text-white px-4 py-2 rounded-full hover:bg-slate-600 transition">
+                Limpiar
+              </button>
+              <button onClick={handleSearch} className="bg-slate-500 text-white px-4 py-2 rounded-full hover:bg-slate-600 transition">
+                Buscar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+  
