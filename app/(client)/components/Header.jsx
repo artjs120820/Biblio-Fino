@@ -21,7 +21,11 @@ export default function Header({ setSidebarOpen, sidebarOpen }) {
 
         // Cerrar el menú desplegable
         setDropdownOpen(false);
+
+        // Recargar la página
+        window.location.reload();
     };
+
 
     return (
         <>

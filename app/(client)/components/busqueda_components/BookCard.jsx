@@ -8,7 +8,7 @@ export default function BookCard({ book, filters }) {
                 backgroundPosition: "center",
             }}
         >
-            <div className="absolute inset-0 bg-black bg-opacity-75 flex items-center py-4 px-6 gap-3 rounded-lg">
+            <div className="absolute inset-0 bg-black bg-opacity-75 flex items-center py-4 px-6 gap-5 rounded-lg">
                 {/* Imagen del libro con tamaño adaptable */}
                 <div className="flex-shrink-0 transform transition-transform duration-300 ease-in-out group-hover:scale-110">
                     <img
