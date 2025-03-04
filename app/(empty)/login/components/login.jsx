@@ -18,15 +18,18 @@ export default function LoginForm({ setShowRegister, handleClose }) {
       const dataUsuarioRetornada = {
         token: "fakeToken123456",
         usuario: {
+          nombre: "Arturo",
           correo: usuario.correo,
           contra: usuario.contra,
           dni: "12345678",
           ciudad: "Lima",
           telefono: "987654321",
           librosRegistrados: [
-            { titulo: "Cien años de soledad", autor: "Gabriel García Márquez" },
-            { titulo: "1984", autor: "George Orwell" },
-            { titulo: "El principito", autor: "Antoine de Saint-Exupéry" },
+            { titulo: "Cien años de soledad", imagen: "https://i.ytimg.com/vi/VXEHebCpuhs/hq720.jpg?sqp=-oaymwE7CK4FEIIDSFryq4qpAy0IARUAAAAAGAElAADIQj0AgKJD8AEB-AH-CYAC0AWKAgwIABABGD8gZSg9MA8=&rs=AOn4CLDqe159pN6h98UkwvzxBnReR3zZZQ", autor: "Gabriel García Márquez", fechapedido: "2025-03-01", fechavencimiento: "2025-03-15" },
+            { titulo: "1984", imagen: "https://i.ytimg.com/vi/VXEHebCpuhs/hq720.jpg?sqp=-oaymwE7CK4FEIIDSFryq4qpAy0IARUAAAAAGAElAADIQj0AgKJD8AEB-AH-CYAC0AWKAgwIABABGD8gZSg9MA8=&rs=AOn4CLDqe159pN6h98UkwvzxBnReR3zZZQ", autor: "George Orwell", fechapedido: "2025-02-28", fechavencimiento: "2025-03-14" },
+            { titulo: "El principito", imagen: "https://i.ytimg.com/vi/VXEHebCpuhs/hq720.jpg?sqp=-oaymwE7CK4FEIIDSFryq4qpAy0IARUAAAAAGAElAADIQj0AgKJD8AEB-AH-CYAC0AWKAgwIABABGD8gZSg9MA8=&rs=AOn4CLDqe159pN6h98UkwvzxBnReR3zZZQ", autor: "Antoine de Saint-Exupéry", fechapedido: "2025-02-25", fechavencimiento: "2025-03-11" },
+            { titulo: "Don Quijote de la Mancha", imagen: "https://i.ytimg.com/vi/VXEHebCpuhs/hq720.jpg?sqp=-oaymwE7CK4FEIIDSFryq4qpAy0IARUAAAAAGAElAADIQj0AgKJD8AEB-AH-CYAC0AWKAgwIABABGD8gZSg9MA8=&rs=AOn4CLDqe159pN6h98UkwvzxBnReR3zZZQ", autor: "Miguel de Cervantes", fechapedido: "2025-02-27", fechavencimiento: "2025-03-13" },
+            { titulo: "Crimen y castigo", imagen: "https://i.ytimg.com/vi/VXEHebCpuhs/hq720.jpg?sqp=-oaymwE7CK4FEIIDSFryq4qpAy0IARUAAAAAGAElAADIQj0AgKJD8AEB-AH-CYAC0AWKAgwIABABGD8gZSg9MA8=&rs=AOn4CLDqe159pN6h98UkwvzxBnReR3zZZQ", autor: "Fiódor Dostoievski", fechapedido: "2025-03-02", fechavencimiento: "2025-03-16" },
           ],
         },
       };
@@ -36,7 +39,7 @@ export default function LoginForm({ setShowRegister, handleClose }) {
         localStorage.setItem("user", JSON.stringify(dataUsuarioRetornada.usuario));
 
         const encodedUserInfo = btoa(JSON.stringify(dataUsuarioRetornada));
-        document.cookie = `auth_token=${encodedUserInfo}; path=/; max-age=86400; Secure`;
+        document.cookie = `auth_token=${encodedUserInfo}; path=/; max-age=2592000; Secure`;
         setUser(dataUsuarioRetornada.usuario);
       }, 2000);
     } else {
