@@ -21,11 +21,12 @@ export default function RootLayout({ children }) {
           <Lateral />
         </div>
         <main
-          className={`flex-1 p-4 transition-all duration-300  ${sidebarOpen ? "ml-64" : "ml-0"
+          className={`flex-1 p-4 transition-all scroll-m-1 duration-300 overflow-auto ${sidebarOpen ? "ml-64" : "ml-0"
             }`}
         >
           {children}
         </main>
+
       </div>
     </div>
   );
