@@ -26,7 +26,7 @@ export default function Page() {
         .slice(0, 3);
 
     return (
-        <div className="flex flex-col items-start justify-center p-8 w-full">
+        <div className="flex flex-col items-start justify-center w-full">
             {user ? (
                 <>
                     <h1 className="text-3xl font-bold mb-4">Bienvenido, {user.nombre}</h1>

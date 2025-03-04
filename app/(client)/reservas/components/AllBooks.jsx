@@ -22,7 +22,7 @@ export default function AllBooks({ libros, onBack }) {
     }, [orden, libros]);
 
     return (
-        <div className="p-8 w-full">
+        <div className="w-full">
             <button onClick={onBack} className="text-blue-500 hover:underline mb-4">
                 ← Volver
             </button>

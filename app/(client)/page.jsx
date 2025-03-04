@@ -121,7 +121,7 @@ export default function Search() {
   };
 
   return (
-    <div className="p-8">
+    <div >
       {showResults ? (
         <ResultsPage onBack={handleBack} filters={filters} data={filteredResults} />
       ) : (
