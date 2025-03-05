@@ -1,11 +1,6 @@
 "use client";
-import { useUser } from "../../../context/UserContext";
-import ResultsCarousel from "../components/CarruselResults";
-import { useRouter, useParams, useSearchParams } from "next/navigation";
-import { useEffect } from "react";
-import { useCallback } from "react";
-
-
+import { useParams, useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
 const data = [
     {
         "Titulo": "El gato sin botas",
@@ -106,43 +101,76 @@ const data = [
 
     },
 ];
-export default function Resultados() {
-    const { filters, updateFilteredBooks, filteredBooks } = useUser();
-    const router = useRouter();
-    const params = useParams();
-    const searchParams = useSearchParams();
-    const searchTerm = decodeURIComponent(params?.searchTerm || "");
-    const page = parseInt(searchParams.get("page")) || 1;
-    const memoizedUpdateFilteredBooks = useCallback(updateFilteredBooks, []);
+export default function BookInfo() {
+    const { titulo } = useParams(); 
+    const decodedTitulo = decodeURIComponent(titulo); 
+    const router = useRouter();  
+
+    const [bookFound, setBookFound] = useState(null);
+
+    const book = data.find((b) => b.Titulo === decodedTitulo);
 
     useEffect(() => {
-        if (!searchTerm) {
-            router.replace("/"); 
-            return;
+        if (book) {
+            setBookFound(true);  
+        } else {
+            setBookFound(false); 
         }
-        const normalizedSearch = searchTerm.toLowerCase();
-        const results = data.filter((book) =>
-            book.Titulo.toLowerCase().includes(normalizedSearch) ||
-            (filters.authors && book["Autor(es)"].toLowerCase().includes(normalizedSearch)) ||
-            (filters.series && book.Serie.toLowerCase().includes(normalizedSearch)) ||
-            (filters.isbn && book.ISBN13.includes(normalizedSearch))
+    }, [book]); 
+
+    const handleBackClick = () => {
+        if (bookFound) {
+            router.back();  
+        } else {
+            router.push("/");  
+        }
+    };
+
+    if (bookFound === false) {
+        return (
+            <div>
+                <h2>No se encontró el libro</h2>
+                <button
+                    onClick={handleBackClick}
+                    className="mt-6 px-6 py-2 bg-cyan-800 text-white font-semibold rounded-full shadow-md hover:bg-cyan-700 transition-all"
+                >
+                    Ir a la página principal
+                </button>
+            </div>
         );
-    
-        memoizedUpdateFilteredBooks(results);
-    }, [searchTerm, filters, memoizedUpdateFilteredBooks]);
-    
+    }
 
     return (
-        <div className="relative w-full">
-            <h1 className="text-2xl font-bold text-center">Búsqueda - Resultados</h1>
-            <ResultsCarousel
-                data={filteredBooks}
-                page={page}
-                onBack={() => router.push(`/`)}
-                filters={filters}
-                searchTerm={searchTerm}
-            />
+        <div className="bg-white shadow-2xl rounded-3xl py-8 pl-8 pr-24 min-w-full grid grid-cols-1 md:grid-cols-2 items-center transition-all duration-500">
+            <div className="flex justify-center">
+                <img
+                    src={book.Imagen}
+                    alt={book.Titulo}
+                    className="w-80 h-80 object-cover rounded-xl shadow-lg transform transition-all duration-300 hover:scale-105"
+                    onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = "/busqueda/default.jpg";
+                    }}
+                />
+            </div>
+            <div className="text-gray-800">
+                <h2 className="text-3xl font-extrabold text-gray-900 mb-3">{book.Titulo}</h2>
+
+                <p className="text-lg"><strong className="text-cyan-700">Autor(es):</strong> {book["Autor(es)"]}</p>
+                <p className="text-lg"><strong className="text-cyan-700">Serie:</strong> {book.Serie || "No especificada"}</p>
+                <p className="text-lg"><strong className="text-cyan-700">ISBN13:</strong> {book.ISBN13 || "No disponible"}</p>
+                {book.Descripcion && (
+                    <p className="mt-4 text-gray-600 leading-relaxed text-justify border-l-4 border-cyan-500 pl-4 italic">
+                        {book.Descripcion}
+                    </p>
+                )}
+                <button
+                    onClick={handleBackClick}  
+                    className="mt-6 px-6 py-2 bg-cyan-800 text-white font-semibold rounded-full shadow-md hover:bg-cyan-700 transition-all"
+                >
+                    ⬅ Volver
+                </button>
+            </div>
         </div>
     );
 }
-

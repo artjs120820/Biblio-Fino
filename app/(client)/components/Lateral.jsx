@@ -22,11 +22,10 @@ export default function Lateral() {
     </aside>
   );
 }
-
 function LinkItem({ href, pathname, children }) {
   const isActive =
     href === "/"
-      ? pathname === "/" || pathname.startsWith("/resultados")
+      ? !pathname.includes("/reservas") && !pathname.includes("/perfil")
       : pathname.startsWith(href);
 
   return (

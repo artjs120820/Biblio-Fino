@@ -1,13 +1,13 @@
 import Aviso from "../../components/Aviso"
 import { useState } from "react";
 import Link from "next/link";
-import { useUser } from "../../../context/UserContext"; // 
+import { useUser } from "../../../context/UserContext";
 
 
 
 export default function SearchPage() {
     const [searchTerm, setSearchTerm] = useState("");
-    const { filters, updateFilters  } = useUser(); // 🔥 Usa los filtros del contexto
+    const { filters, updateFilters  } = useUser(); 
     const [avisoVisible, setAvisoVisible] = useState(false);
 
     const handleClear = () => {
@@ -19,7 +19,7 @@ export default function SearchPage() {
         if (!searchTerm.trim()) {
             setAvisoVisible(true);
             setTimeout(() => setAvisoVisible(false), 3000);
-            e.preventDefault(); // Evita la redirección si el campo está vacío
+            e.preventDefault(); 
         }
     };
     return (

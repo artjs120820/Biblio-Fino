@@ -11,21 +11,12 @@ export default function Header({ setSidebarOpen, sidebarOpen }) {
     const { user, logout } = useUser();
     const [dropdownOpen, setDropdownOpen] = useState(false);
 
-    // 🔥 Función para cerrar sesión
     const handleLogout = () => {
-        // Eliminar la cookie del token
         document.cookie = "auth_token=; path=/; max-age=0";
-
-        // Limpiar el contexto del usuario
         logout();
-
-        // Cerrar el menú desplegable
         setDropdownOpen(false);
-
-        // Recargar la página
         window.location.reload();
     };
-
 
     return (
         <>
@@ -57,8 +48,8 @@ export default function Header({ setSidebarOpen, sidebarOpen }) {
                                     initial={{ opacity: 0, y: -10 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     exit={{ opacity: 0, y: -10 }}
-                                    className="absolute right-0 mt-2 w-48 bg-gray-800 shadow-lg rounded-md z-50" // 🔥 Agregado `z-50`
-                                    style={{ pointerEvents: "auto" }} // 🔥 Se asegura de que se pueda interactuar con todo el dropdown
+                                    className="absolute right-0 mt-2 w-48 bg-gray-800 shadow-lg rounded-md z-50" 
+                                    style={{ pointerEvents: "auto" }}
                                 >
                                     <button
                                         className="block w-full text-left px-4 py-2 text-white hover:bg-gray-700"
