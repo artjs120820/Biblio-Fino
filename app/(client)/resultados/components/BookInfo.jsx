@@ -1,6 +1,5 @@
 export default function BookInfo({ book, onBack }) {
     return (
-
         <div className="bg-white shadow-2xl rounded-3xl py-8 pl-8 pr-24 min-w-full grid grid-cols-1 md:grid-cols-2 items-center transition-all duration-500">
             <div className="flex justify-center">
                 <img

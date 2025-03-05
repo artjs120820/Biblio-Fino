@@ -1,23 +1,27 @@
 import Aviso from "../../components/Aviso"
 import { useState } from "react";
-export default function SearchPage({
-    searchTerm,
-    setSearchTerm,
-    filters,
-    setFilters,
-    handleClear,
-    handleSearch,
-}) {
+import Link from "next/link";
+import { useUser } from "../../../context/UserContext"; // 
+
+
+
+export default function SearchPage() {
+    const [searchTerm, setSearchTerm] = useState("");
+    const { filters, updateFilters  } = useUser(); // 🔥 Usa los filtros del contexto
     const [avisoVisible, setAvisoVisible] = useState(false);
-    const handleLocalSearch = () => { 
+
+    const handleClear = () => {
+        setSearchTerm("");
+        updateFilters ({ authors: false, series: false, isbn: false });
+    };
+
+    const handleLocalSearch = (e) => {
         if (!searchTerm.trim()) {
             setAvisoVisible(true);
             setTimeout(() => setAvisoVisible(false), 3000);
-            return;
+            e.preventDefault(); // Evita la redirección si el campo está vacío
         }
-        handleSearch();
     };
-
     return (
         <div>
             <h1 className="text-2xl font-bold mb-4">Búsqueda</h1>
@@ -50,7 +54,7 @@ export default function SearchPage({
                                         type="checkbox"
                                         className="mr-2"
                                         checked={filters[key]}
-                                        onChange={() => setFilters({ ...filters, [key]: !filters[key] })}
+                                        onChange={() => updateFilters ({ ...filters, [key]: !filters[key] })}
                                     />
                                     {key === "authors" ? "Autor(es)" : key.charAt(0).toUpperCase() + key.slice(1)}
                                 </label>
@@ -62,9 +66,15 @@ export default function SearchPage({
                         <button onClick={handleClear} className="bg-slate-500 text-white px-4 py-2 rounded-full hover:bg-slate-600 transition">
                             Limpiar
                         </button>
-                        <button onClick={handleLocalSearch}  className="bg-slate-500 text-white px-4 py-2 rounded-full hover:bg-slate-600 transition">
-                            Buscar
-                        </button>
+                        <Link
+                            href={searchTerm.trim() ? `/resultados/${encodeURIComponent(searchTerm)}?page=1` : "#"}
+                            onClick={handleLocalSearch}
+                        >
+
+                            <button className="bg-slate-500 text-white px-4 py-2 rounded-full hover:bg-slate-600 transition">
+                                Buscar
+                            </button>
+                        </Link>
                     </div>
                 </div>
             </div>

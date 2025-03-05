@@ -13,7 +13,6 @@ export default function Lateral() {
       <nav className="flex flex-col space-y-6 relative">
         <LinkItem href="/" pathname={pathname}>Biblioteca</LinkItem>
         <LinkItem href="/reservas" pathname={pathname}>Reservas</LinkItem>
-        {/* Mostrar el link "Perfil" solo si hay un usuario autenticado */}
         {user && <LinkItem href="/perfil" pathname={pathname}>Perfil</LinkItem>}
       </nav>
 
@@ -27,7 +26,7 @@ export default function Lateral() {
 function LinkItem({ href, pathname, children }) {
   const isActive =
     href === "/"
-      ? pathname === "/" 
+      ? pathname === "/" || pathname.startsWith("/resultados")
       : pathname.startsWith(href);
 
   return (
@@ -44,4 +43,5 @@ function LinkItem({ href, pathname, children }) {
     </div>
   );
 }
+
 

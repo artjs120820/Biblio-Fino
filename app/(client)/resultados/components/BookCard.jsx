@@ -9,7 +9,6 @@ export default function BookCard({ book, filters }) {
             }}
         >
             <div className="absolute inset-0 bg-black bg-opacity-75 flex items-center py-4 px-6 gap-5 rounded-lg">
-                {/* Imagen del libro con tamaño adaptable */}
                 <div className="flex-shrink-0 transform transition-transform duration-300 ease-in-out group-hover:scale-110">
                     <img
                         src={book.Imagen}
@@ -21,8 +20,6 @@ export default function BookCard({ book, filters }) {
                         }}
                     />
                 </div>
-
-                {/* Información del libro con tamaño de fuente responsive */}
                 <div
                     className="ml-6 sm:ml-4 text-white transform transition-transform duration-300 ease-in-out group-hover:scale-110"
                     style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.7)" }}
