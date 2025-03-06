@@ -1,8 +1,13 @@
+"use client"
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import LibroCard from "./LibroCard";
+import LibroCard from "../reservas/components/LibroCard";
+import Link from "next/link"; 
+import { useUser } from "../../context/UserContext"; 
 
-export default function AllBooks({ libros, onBack }) {
+export default function AllBooks() {
+    const { user } = useUser(); 
+    const libros = user?.librosRegistrados || []; 
     const [orden, setOrden] = useState("vencimiento");
     const [librosOrdenados, setLibrosOrdenados] = useState([]);
 
@@ -23,9 +28,9 @@ export default function AllBooks({ libros, onBack }) {
 
     return (
         <div className="w-full">
-            <button onClick={onBack} className="text-blue-500 hover:underline mb-4">
+            <Link href={"/reservas"} className="text-blue-500 hover:underline mb-4">
                 ← Volver
-            </button>
+            </Link>
 
             <h1 className="text-3xl font-bold mb-4">📖 Todos los libros</h1>
 

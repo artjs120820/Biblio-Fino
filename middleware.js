@@ -10,5 +10,5 @@ export function middleware(req) {
 }
 
 export const config = {
-    matcher: ["/perfil/:path*"],
+    matcher: ["/perfil/:path*", "/tusReservas"], 
 };

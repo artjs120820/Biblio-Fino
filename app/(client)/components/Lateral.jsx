@@ -25,8 +25,10 @@ export default function Lateral() {
 function LinkItem({ href, pathname, children }) {
   const isActive =
     href === "/"
-      ? !pathname.includes("/reservas") && !pathname.includes("/perfil")
-      : pathname.startsWith(href);
+      ? !pathname.includes("/reservas") && !pathname.includes("/perfil") && !pathname.includes("/tusReservas")
+      : href === "/reservas"
+        ? pathname.startsWith("/reservas") || pathname.startsWith("/tusReservas")
+        : pathname.startsWith(href);
 
   return (
     <div className="relative flex items-center">
@@ -42,5 +44,6 @@ function LinkItem({ href, pathname, children }) {
     </div>
   );
 }
+
 
 
