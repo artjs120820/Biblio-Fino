@@ -7,29 +7,40 @@ import { useUser } from "../../../context/UserContext";
 
 export default function SearchPage() {
     const [searchTerm, setSearchTerm] = useState("");
-    const { filters, updateFilters  } = useUser(); 
+    const { filters, updateFilters } = useUser();
     const [avisoVisible, setAvisoVisible] = useState(false);
-
+    const { user } = useUser();
     const handleClear = () => {
         setSearchTerm("");
-        updateFilters ({ authors: false, series: false, isbn: false });
+        updateFilters({ authors: false, series: false, isbn: false });
     };
 
     const handleLocalSearch = (e) => {
         if (!searchTerm.trim()) {
             setAvisoVisible(true);
             setTimeout(() => setAvisoVisible(false), 3000);
-            e.preventDefault(); 
+            e.preventDefault();
         }
     };
     return (
         <div>
-            <h1 className="text-2xl font-bold mb-4">Búsqueda</h1>
+            <div className="flex flex-row justify-between items-center mb-4">
+                <h1 className="text-2xl font-bold">Búsqueda</h1>
+                {user?.tipo === "admin" ? (
+                    <Link href="/agregarLibro" className="bg-teal-800 text-white px-4 py-2 rounded-full hover:bg-teal-600 transition">
+                        Añadir un nuevo recurso
+                    </Link>
+                ) : null}
+            </div>
             <div className="bg-blue-200 p-6 rounded-lg flex gap-8">
                 <div className="flex-[60%]">
+
                     <label className="block font-semibold mb-1" htmlFor="search">
                         Ingresa la palabra clave
                     </label>
+
+
+
                     <div className="relative">
                         <span className="absolute inset-y-0 left-3 flex items-center text-gray-600">
                             🔍
@@ -54,7 +65,7 @@ export default function SearchPage() {
                                         type="checkbox"
                                         className="mr-2"
                                         checked={filters[key]}
-                                        onChange={() => updateFilters ({ ...filters, [key]: !filters[key] })}
+                                        onChange={() => updateFilters({ ...filters, [key]: !filters[key] })}
                                     />
                                     {key === "authors" ? "Autor(es)" : key.charAt(0).toUpperCase() + key.slice(1)}
                                 </label>

@@ -19,6 +19,7 @@ export default function LoginForm({ setShowRegister, handleClose }) {
         token: "fakeToken123456",
         usuario: {
           nombre: "Arturo",
+          tipo: "admin",
           foto: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQMBC2wzk5HAsC-PwTPfyHJ0FiSEu9i_7EwLantt3qDOlQIDzoU0fDGxy1H1y-IOt5ifm8&usqp=CAU",
           descripcion: "Queremos recordarle que Adobe XD sigue en modo de mantenimiento. Esto significa que no estamos invirtiendo en el desarrollo continuo o el envío de nuevas características dentro del producto. Seguiremos prestando asistencia a los clientes existentes solucionando errores y actualizando cualquier necesidad de seguridad o privacidad mientras se encuentre en modo de mantenimiento.",
           fechaRegistro: "2024-12-28",
@@ -27,10 +28,6 @@ export default function LoginForm({ setShowRegister, handleClose }) {
           dni: "12345678",
           ciudad: "Lima",
           telefono: "987654321",
-          librosRegistrados: [
-            { titulo: "Cien años de soledad", imagen: "https://i.ytimg.com/vi/VXEHebCpuhs/hq720.jpg?sqp=-oaymwE7CK4FEIIDSFryq4qpAy0IARUAAAAAGAElAADIQj0AgKJD8AEB-AH-CYAC0AWKAgwIABABGD8gZSg9MA8=&rs=AOn4CLDqe159pN6h98UkwvzxBnReR3zZZQ", autor: "Gabriel García Márquez", fechapedido: "2025-03-01", fechavencimiento: "2025-03-15" },
-            { titulo: "1984", imagen: "https://i.ytimg.com/vi/VXEHebCpuhs/hq720.jpg?sqp=-oaymwE7CK4FEIIDSFryq4qpAy0IARUAAAAAGAElAADIQj0AgKJD8AEB-AH-CYAC0AWKAgwIABABGD8gZSg9MA8=&rs=AOn4CLDqe159pN6h98UkwvzxBnReR3zZZQ", autor: "George Orwell", fechapedido: "2025-02-28", fechavencimiento: "2025-03-14" },
-          ],
         },
       };
       setSuccessMessage("Inicio de sesión exitoso. Cerrando...");
