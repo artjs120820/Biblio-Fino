@@ -1,6 +1,9 @@
 "use client";
 import { useParams, useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
+import { useUser } from "../../context/UserContext";
+import Link from "next/link";
+
 const data = [
     {
         "Titulo": "El gato sin botas",
@@ -101,7 +104,9 @@ const data = [
 
     },
 ];
+
 export default function BookInfo() {
+    const { user } = useUser();
     const { titulo } = useParams();
     const decodedTitulo = decodeURIComponent(titulo);
     const router = useRouter();
@@ -165,12 +170,21 @@ export default function BookInfo() {
                                 {book.Descripcion}
                             </p>
                         )}
-                        <button
-                            onClick={handleBackClick}
-                            className="mt-6 px-6 py-2 bg-cyan-800 text-white font-semibold rounded-full shadow-md hover:bg-cyan-700 transition-all"
-                        >
-                            ⬅ Volver
-                        </button>
+                        <div className="div flex flex-row mt-5 gap-6">
+                            <button
+                                onClick={handleBackClick}
+                                className="px-6 py-2 bg-cyan-800 text-white font-semibold rounded-full shadow-md hover:bg-cyan-700 transition-all"
+                            >
+                                ⬅ Volver
+                            </button>
+                            {user?.tipo === "admin" ? (
+
+                                <Link href="/editarLibro" className="bg-teal-800 text-white px-4 py-2 rounded-full hover:bg-teal-600 transition">
+                                    Editar Libro
+                                </Link>
+
+                            ) : null}
+                        </div>
                     </div>
                 </>
             ) : (

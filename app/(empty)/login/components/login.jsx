@@ -28,6 +28,10 @@ export default function LoginForm({ setShowRegister, handleClose }) {
           dni: "12345678",
           ciudad: "Lima",
           telefono: "987654321",
+          librosRegistrados: [
+            { titulo: "Cien años de soledad", imagen: "https://i.ytimg.com/vi/VXEHebCpuhs/hq720.jpg?sqp=-oaymwE7CK4FEIIDSFryq4qpAy0IARUAAAAAGAElAADIQj0AgKJD8AEB-AH-CYAC0AWKAgwIABABGD8gZSg9MA8=&rs=AOn4CLDqe159pN6h98UkwvzxBnReR3zZZQ", autor: "Gabriel García Márquez", fechapedido: "2025-03-01", fechavencimiento: "2025-03-15" },
+            { titulo: "1984", imagen: "https://i.ytimg.com/vi/VXEHebCpuhs/hq720.jpg?sqp=-oaymwE7CK4FEIIDSFryq4qpAy0IARUAAAAAGAElAADIQj0AgKJD8AEB-AH-CYAC0AWKAgwIABABGD8gZSg9MA8=&rs=AOn4CLDqe159pN6h98UkwvzxBnReR3zZZQ", autor: "George Orwell", fechapedido: "2025-02-28", fechavencimiento: "2025-03-14" },
+          ],
         },
       };
       setSuccessMessage("Inicio de sesión exitoso. Cerrando...");

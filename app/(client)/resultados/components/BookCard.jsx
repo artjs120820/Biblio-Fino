@@ -1,4 +1,8 @@
+import { useUser } from "../../../context/UserContext"
+import Link from "next/link";
 export default function BookCard({ book, filters }) {
+    const { user } = useUser();
+
     return (
         <div
             className="relative w-full h-[40vh] sm:h-[35vh] md:h-[40vh] rounded-lg cursor-pointer overflow-hidden shadow-md group"
@@ -34,6 +38,13 @@ export default function BookCard({ book, filters }) {
                     {filters?.isbn && (
                         <p className="text-sm max-[1406px]:text-xs ">ISBN: {book.ISBN13}</p>
                     )}
+                    {user?.tipo === "admin" ? (
+                        <div className="mt-5">
+                            <Link href="/editarLibro" className="bg-teal-800 text-white px-4 py-2 rounded-full hover:bg-teal-600 transition">
+                                Editar Libro
+                            </Link>
+                        </div>
+                    ) : null}
                 </div>
             </div>
         </div>
