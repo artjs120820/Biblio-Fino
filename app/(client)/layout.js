@@ -7,7 +7,6 @@ import Lateral from "./components/Lateral";
 
 export default function RootLayout({ children }) {
   const [sidebarOpen, setSidebarOpen] = useState(true);
-
   return (
     <div className="flex flex-col h-screen">
       <Header setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />
