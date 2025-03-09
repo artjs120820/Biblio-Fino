@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Milkynientos",
+  title: "BiblioFino",
   description: "Líderes innovadores en marketing digital.",
 };
 

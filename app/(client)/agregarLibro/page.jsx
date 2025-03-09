@@ -33,10 +33,12 @@ export default function Agregar() {
 
     return (
         <div className="p-6 bg-white shadow-lg rounded-lg ">
-            <Link href="/" className="bg-slate-500 text-white px-4 py-2 rounded-full hover:bg-slate-600 transition">
-                Volver
-            </Link>
-            <h1 className="text-2xl font-bold my-4 text-gray-800">Agregar Nuevo Libro</h1>
+            <div className="flex flex-row items-center justify-between mb-3">
+                <h1 className="text-2xl font-bold text-gray-800">Agregar Nuevo Libro</h1>
+                <Link href="/" className="bg-slate-500 text-white px-4 py-2 rounded-full hover:bg-slate-600 transition">
+                    Volver
+                </Link>
+            </div>
             <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-2 gap-6">
                     <div className="space-y-4">
