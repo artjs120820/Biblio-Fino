@@ -39,18 +39,17 @@ export default function BookCard({ book, filters }) {
                     {filters?.isbn && (
                         <p className="text-sm max-[1406px]:text-xs ">ISBN: {book.ISBN13}</p>
                     )}
-                    {user?.tipo === "admin" ? (
+                    {user?.tipo && ["admin", "usuario"].includes(user.tipo) && (
                         <div className="mt-5">
                             <Link
-                                href={`/editarLibro/${encodeURIComponent(book.Titulo)}`}
+                                href={`/${user.tipo === "admin" ? "editarLibro" : "reservaLibro"}/${encodeURIComponent(book.Titulo)}`}
                                 className="bg-teal-800 text-white px-4 py-2 rounded-full hover:bg-teal-600 transition cursor-pointer"
                                 onClick={(e) => e.stopPropagation()} // Evita que se active el click de la tarjeta
                             >
-                                Editar Libro
+                                {user.tipo === "admin" ? "Editar Libro" : "Reservar Libro"}
                             </Link>
-
                         </div>
-                    ) : null}
+                    )}
                 </div>
             </div>
         </div>

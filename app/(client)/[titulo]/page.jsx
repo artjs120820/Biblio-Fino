@@ -177,13 +177,14 @@ export default function BookInfo() {
                             >
                                 ⬅ Volver
                             </button>
-                            {user?.tipo === "admin" ? (
-
-                                <Link href="/editarLibro" className="bg-teal-800 text-white px-4 py-2 rounded-full hover:bg-teal-600 transition">
-                                    Editar Libro
+                            {user?.tipo && ["admin", "usuario"].includes(user.tipo) && (
+                                <Link
+                                    href={`/${user.tipo === "admin" ? "editarLibro" : "reservaLibro"}/${encodeURIComponent(book.Titulo)}`}
+                                    className="bg-teal-800 text-white px-4 py-2 rounded-full hover:bg-teal-600 transition font-semibold"
+                                >
+                                    {user.tipo === "admin" ? "Editar Libro" : "Reservar Libro"}
                                 </Link>
-
-                            ) : null}
+                            )}
                         </div>
                     </div>
                 </>

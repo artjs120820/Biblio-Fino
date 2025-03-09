@@ -12,7 +12,7 @@ export function middleware(req) {
     try {
         const decodedString = atob(authToken);
         const decodedToken = JSON.parse(decodedString);
-        userType = decodedToken.usuario.tipo; 
+        userType = decodedToken.usuario.tipo;
     } catch (error) {
         console.error("Error al decodificar el token:", error);
         return NextResponse.redirect(new URL("/reservas", req.url));
@@ -20,10 +20,12 @@ export function middleware(req) {
     if ((req.nextUrl.pathname.startsWith("/editarLibro") || req.nextUrl.pathname === "/agregarLibro") && userType !== "admin") {
         return NextResponse.redirect(new URL("/", req.url));
     }
-
+    if (req.nextUrl.pathname.startsWith("/reservaLibro") && userType !== "usuario") {
+        return NextResponse.redirect(new URL("/", req.url));
+    }
     return NextResponse.next();
 }
 
 export const config = {
-    matcher: ["/perfil/:path*", "/tusReservas", "/agregarLibro", "/editarLibro/:path*"],
+    matcher: ["/perfil/:path*", "/tusReservas", "/agregarLibro", "/editarLibro/:path*", "/reservaLibro/:path*"],
 };
