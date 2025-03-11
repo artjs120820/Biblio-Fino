@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "dotenv": "^16.4.7",
     "framer-motion": "^12.4.9",
     "lucide-react": "^0.477.0",
     "natural": "^8.0.1",

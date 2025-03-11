@@ -12,42 +12,42 @@ export default function LoginForm({ setShowRegister, handleClose }) {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+  
+  const handleLogin = async () => {
+    try {
+      const loginUrl = `http://127.0.0.1:8000/login/`;
+      console.log("URL de la API:", loginUrl);  // Verifica qué URL se está utilizando
 
-  const handleLogin = () => {
-    if (email === usuario.correo && password === usuario.contra) {
-      const dataUsuarioRetornada = {
-        token: "fakeToken123456",
-        usuario: {
-          nombre: "Arturo",
-          tipo: "admin",
-          foto: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQMBC2wzk5HAsC-PwTPfyHJ0FiSEu9i_7EwLantt3qDOlQIDzoU0fDGxy1H1y-IOt5ifm8&usqp=CAU",
-          descripcion: "Queremos recordarle que Adobe XD sigue en modo de mantenimiento. Esto significa que no estamos invirtiendo en el desarrollo continuo o el envío de nuevas características dentro del producto. Seguiremos prestando asistencia a los clientes existentes solucionando errores y actualizando cualquier necesidad de seguridad o privacidad mientras se encuentre en modo de mantenimiento.",
-          fechaRegistro: "2024-12-28",
-          correo: usuario.correo,
-          contra: usuario.contra,
-          dni: "12345678",
-          ciudad: "Lima",
-          telefono: "987654321",
-          librosRegistrados: [
-            { titulo: "Cien años de soledad", imagen: "https://i.ytimg.com/vi/VXEHebCpuhs/hq720.jpg?sqp=-oaymwE7CK4FEIIDSFryq4qpAy0IARUAAAAAGAElAADIQj0AgKJD8AEB-AH-CYAC0AWKAgwIABABGD8gZSg9MA8=&rs=AOn4CLDqe159pN6h98UkwvzxBnReR3zZZQ", autor: "Gabriel García Márquez", fechapedido: "2025-03-01", fechavencimiento: "2025-03-15" },
-            { titulo: "1984", imagen: "https://i.ytimg.com/vi/VXEHebCpuhs/hq720.jpg?sqp=-oaymwE7CK4FEIIDSFryq4qpAy0IARUAAAAAGAElAADIQj0AgKJD8AEB-AH-CYAC0AWKAgwIABABGD8gZSg9MA8=&rs=AOn4CLDqe159pN6h98UkwvzxBnReR3zZZQ", autor: "George Orwell", fechapedido: "2025-02-28", fechavencimiento: "2025-03-14" },
-          ],
+      const response = await fetch(loginUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
-      };
-      setSuccessMessage("Inicio de sesión exitoso. Cerrando...");
-      setTimeout(() => {
-        handleClose();
-        localStorage.setItem("user", JSON.stringify(dataUsuarioRetornada.usuario));
+        body: JSON.stringify({
+          correo: email,
+          contrasenia: password,
+        }),
+      });
 
-        const encodedUserInfo = btoa(JSON.stringify(dataUsuarioRetornada));
-        document.cookie = `auth_token=${encodedUserInfo}; path=/; max-age=2592000; Secure`;
-        setUser(dataUsuarioRetornada.usuario);
-      }, 2000);
-    } else {
-      setError("Correo o contraseña incorrectos");
+      const data = await response.json();
+
+      if (response.ok) {
+        setSuccessMessage("Inicio de sesión exitoso. Cerrando...");
+        setTimeout(() => {
+          handleClose();
+          localStorage.setItem("user", JSON.stringify(data.usuario));
+
+          const encodedUserInfo = btoa(JSON.stringify(data));
+          document.cookie = `auth_token=${encodedUserInfo}; path=/; max-age=2592000; Secure`;
+          setUser(data.usuario);
+        }, 2000);
+      } else {
+        setError(data.error || "Correo o contraseña incorrectos");
+      }
+    } catch (error) {
+      setError("Hubo un error al intentar iniciar sesión. Inténtalo nuevamente.");
     }
   };
-
   return (
     <>
       <h2 className="text-3xl font-bold mb-6">Sistema de reserva de libros</h2>
