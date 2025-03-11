@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useUser } from "../../../context/UserContext";
+import ciudadanoApi from "../../../api/ciudadano"; // Importamos la API
+
 
 const usuario = {
   correo: "arturosilvera@gmail.com",
@@ -12,27 +14,15 @@ export default function LoginForm({ setShowRegister, handleClose }) {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
-  
+
   const handleLogin = async () => {
     try {
-      const loginUrl = `http://127.0.0.1:8000/login/`;
-      console.log("URL de la API:", loginUrl);  // Verifica qué URL se está utilizando
+      const response = await ciudadanoApi.login(email, password); // Llamamos a la API
 
-      const response = await fetch(loginUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          correo: email,
-          contrasenia: password,
-        }),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
+      if (response && response.status === 200) {
+        const data = response.data;
         setSuccessMessage("Inicio de sesión exitoso. Cerrando...");
+
         setTimeout(() => {
           handleClose();
           localStorage.setItem("user", JSON.stringify(data.usuario));
@@ -42,7 +32,7 @@ export default function LoginForm({ setShowRegister, handleClose }) {
           setUser(data.usuario);
         }, 2000);
       } else {
-        setError(data.error || "Correo o contraseña incorrectos");
+        setError(response?.data?.error || "Correo o contraseña incorrectos");
       }
     } catch (error) {
       setError("Hubo un error al intentar iniciar sesión. Inténtalo nuevamente.");

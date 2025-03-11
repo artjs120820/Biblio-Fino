@@ -1,13 +1,14 @@
 import { useUser } from "../../../context/UserContext"
 import Link from "next/link";
 export default function BookCard({ book, filters }) {
+    console.log(book)
+    console.log(filters)
     const { user } = useUser();
-
     return (
         <div
             className="relative w-full h-[40vh] sm:h-[35vh] md:h-[40vh] rounded-lg cursor-pointer overflow-hidden shadow-md group"
             style={{
-                backgroundImage: `url(${book.Imagen})`,
+                backgroundImage: `url(${book.imagen})`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
             }}
@@ -16,8 +17,8 @@ export default function BookCard({ book, filters }) {
             <div className="absolute inset-0 bg-black bg-opacity-75 flex items-center py-4 px-6 gap-5 rounded-lg">
                 <div className="flex-shrink-0 transform transition-transform duration-300 ease-in-out group-hover:scale-110">
                     <img
-                        src={book.Imagen}
-                        alt={book.Titulo}
+                        src={book.imagen}
+                        alt={book.libro.titulo}
                         className="w-[200px] max-[1604px]:w-[150px] max-[1425px]:w-[100px] h-[280px] max-[1425px]:h-[220px] object-cover rounded-md"
                         onError={(e) => {
                             e.target.onerror = null;
@@ -29,15 +30,15 @@ export default function BookCard({ book, filters }) {
                     className="ml-6 sm:ml-4 text-white transform transition-transform duration-300 ease-in-out group-hover:scale-110"
                     style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.7)" }}
                 >
-                    <h2 className="font-bold text-xl sm:text-lg md:text-xl">{book.Titulo}</h2>
-                    {filters?.authors && book["Autor(es)"] && (
-                        <p className="text-sm max-[1406px]:text-xs ">Autor: {book["Autor(es)"]}</p>
+                    <h2 className="font-bold text-xl sm:text-lg md:text-xl">{book.libro.titulo}</h2>
+                    {filters?.authors && book.libro.autor && (
+                        <p className="text-sm max-[1406px]:text-xs ">Autor: {book.libro.autor}</p>
                     )}
                     {filters?.series && (
                         <p className="text-sm max-[1406px]:text-xs ">Serie: {book.Serie}</p>
                     )}
                     {filters?.isbn && (
-                        <p className="text-sm max-[1406px]:text-xs ">ISBN: {book.ISBN13}</p>
+                        <p className="text-sm max-[1406px]:text-xs ">ISBN: {book.isbn }</p>
                     )}
                     {user?.tipo && ["admin", "usuario"].includes(user.tipo) && (
                         <div className="mt-5">
