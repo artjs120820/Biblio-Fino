@@ -17,7 +17,7 @@ export function middleware(req) {
         return NextResponse.redirect(new URL("/", req.url));
     }
 
-    if (req.nextUrl.pathname.startsWith("/reservaLibro") && userType !== "usuario") {
+    if ((req.nextUrl.pathname.startsWith("/reservaLibro") || (req.nextUrl.pathname.startsWith("/perfil"))) && userType !== "usuario") {
         return NextResponse.redirect(new URL("/", req.url));
     }
 

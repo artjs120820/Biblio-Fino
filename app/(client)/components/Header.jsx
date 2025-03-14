@@ -6,19 +6,21 @@ import { motion } from "framer-motion";
 import LoginModal from "../../(empty)/login/page";
 import { useUser } from "../../context/UserContext";
 import { useToken } from "../../context/tokenContext";  
+import { useRouter } from "next/navigation";
 
 
 export default function Header({ setSidebarOpen, sidebarOpen }) {
     const [showLogin, setShowLogin] = useState(false);
     const { user, logout } = useUser();
     const { tokenData, cerrarSesion } = useToken();
+    const router = useRouter();
 
     const [dropdownOpen, setDropdownOpen] = useState(false);
 
     const handleLogout = () => {
         cerrarSesion();
         setDropdownOpen(false);
-        window.location.reload();
+        router.push("/reservas"); 
     };
 
     return (
