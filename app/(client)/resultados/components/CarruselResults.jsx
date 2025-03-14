@@ -3,8 +3,10 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import BookCard from "./BookCard";
 import { motion, AnimatePresence } from "framer-motion";
+import { useUser } from "../../../context/UserContext";
 
-export default function ResultsCarousel({ onBack, filters, data, searchTerm, page, totalPages }) {
+export default function ResultsCarousel({ onBack, data, searchTerm, page, totalPages }) {
+    const { filters} = useUser();
     const router = useRouter();
     const setPageWithUrl = (newPage) => {
         if (isNaN(newPage) || newPage < 1) return;

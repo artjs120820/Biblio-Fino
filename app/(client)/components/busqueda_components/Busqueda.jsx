@@ -12,7 +12,7 @@ export default function SearchPage() {
     const { user } = useUser();
     const handleClear = () => {
         setSearchTerm("");
-        updateFilters({ authors: false, series: false, isbn: false });
+        updateFilters({ authors: false, genero: false, isbn: false });
     };
 
     const handleLocalSearch = (e) => {
@@ -59,7 +59,7 @@ export default function SearchPage() {
                     <div className="mb-4">
                         <p className="font-semibold">Incluir búsqueda en:</p>
                         <div className="flex flex-col gap-2 mt-2">
-                            {["authors", "series", "isbn"].map((key) => (
+                            {["authors", "genero", "isbn"].map((key) => (
                                 <label key={key} className="flex items-center">
                                     <input
                                         type="checkbox"

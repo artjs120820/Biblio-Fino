@@ -6,7 +6,7 @@ const UserContext = createContext();
 
 export function UserProvider({ children }) {
   const [user, setUser] = useState(null);
-  const [filters, setFilters] = useState({ authors: false, series: false, isbn: false });
+  const [filters, setFilters] = useState({ authors: false, genero: false, isbn: false });
   const [filteredBooks, setFilteredBooks] = useState([]);
 
   useEffect(() => {
@@ -18,12 +18,12 @@ export function UserProvider({ children }) {
       setFilteredBooks(storedBooks ? JSON.parse(storedBooks) : []);
 
       const storedFilters = localStorage.getItem("filters");
-      setFilters(storedFilters ? JSON.parse(storedFilters) : { authors: false, series: false, isbn: false });
+      setFilters(storedFilters ? JSON.parse(storedFilters) : { authors: false, genero: false, isbn: false });
     } catch (error) {
       console.error("Error al cargar datos desde localStorage:", error);
       setUser(null);
       setFilteredBooks([]);
-      setFilters({ authors: false, series: false, isbn: false });
+      setFilters({ authors: false, genero: false, isbn: false });
     }
   }, []);
 

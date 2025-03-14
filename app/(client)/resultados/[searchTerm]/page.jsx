@@ -37,11 +37,11 @@ export default function Resultados() {
     
         const fetchBooks = async () => {
             const response = await copiaApi.busqueda(searchTerm, page);
-    
+            console.log("LIBROS RESPONSE: ",response.data)
             if (response?.data?.copias) {
                 const total = Math.ceil(response.data.total_copias / 3);
                 setTotalPages(total);
-    
+                
                 if (page > total) {
                     setError(`La página ${page} no existe para la busqueda de "${searchTerm}" no existe.`);
                     setBooks([]);

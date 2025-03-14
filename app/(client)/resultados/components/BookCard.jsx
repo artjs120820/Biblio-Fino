@@ -12,9 +12,9 @@ export default function BookCard({ book, filters }) {
                 backgroundSize: "cover",
                 backgroundPosition: "center",
             }}
-            onClick={() => console.log(`Clic en la tarjeta de ${book.Titulo}`)} 
+            onClick={() => console.log(`Clic en la tarjeta de ${book.Titulo}`)}
         >
-            <div className="absolute inset-0 bg-black bg-opacity-75 flex items-center py-4 px-6 gap-5 rounded-lg">
+            <div className="absolute inset-0 bg-black bg-opacity-80 flex items-center py-4 px-6 gap-5 rounded-lg">
                 <div className="flex-shrink-0 transform transition-transform duration-300 ease-in-out group-hover:scale-110">
                     <img
                         src={book.imagen}
@@ -27,31 +27,33 @@ export default function BookCard({ book, filters }) {
                     />
                 </div>
                 <div
-                    className="ml-6 sm:ml-4 text-white transform transition-transform duration-300 ease-in-out group-hover:scale-110"
-                    style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.7)" }}
+                    className="ml-6 sm:ml-4 text-white transform transition-transform duration-300 ease-in-out group-hover:scale-105 rounded-lg"
                 >
-                    <h2 className="font-bold text-xl sm:text-lg md:text-xl">{book.libro.titulo}</h2>
+                    <h2 className="font-bold text-xl sm:text-lg md:text-xl text-cyan-200">{book.libro.titulo}</h2>
+
                     {filters?.authors && book.libro.autor && (
-                        <p className="text-sm max-[1406px]:text-xs ">Autor: {book.libro.autor}</p>
+                        <p className="text-sm max-[1406px]:text-xs font-extrabold text-white-200">Autor: <span className="text-white-200 font-normal">{book.libro.autor}</span></p>
                     )}
-                    {filters?.series && (
-                        <p className="text-sm max-[1406px]:text-xs ">Serie: {book.Serie}</p>
+                    {filters?.genero && (
+                        <p className="text-sm max-[1406px]:text-xs font-extrabold text-white-200">Género: <span className="text-white-200 font-normal">{book.libro.genero}</span></p>
                     )}
                     {filters?.isbn && (
-                        <p className="text-sm max-[1406px]:text-xs ">ISBN: {book.isbn }</p>
+                        <p className="text-sm max-[1406px]:text-xs font-extrabold text-white-200">ISBN: <span className="text-white-200 font-normal">{book.isbn}</span></p>
                     )}
+
                     {user?.tipo && ["admin", "usuario"].includes(user.tipo) && (
                         <div className="mt-5">
                             <Link
                                 href={`/${user.tipo === "admin" ? "editarLibro" : "reservaLibro"}/${encodeURIComponent(book.Titulo)}`}
-                                className="bg-teal-800 text-white px-4 py-2 rounded-full hover:bg-teal-600 transition cursor-pointer"
-                                onClick={(e) => e.stopPropagation()} 
+                                className="bg-cyan-700 text-white px-4 py-2 rounded-full hover:bg-cyan-500 transition cursor-pointer shadow-md hover:shadow-lg"
+                                onClick={(e) => e.stopPropagation()}
                             >
                                 {user.tipo === "admin" ? "Editar Libro" : "Reservar Libro"}
                             </Link>
                         </div>
                     )}
                 </div>
+
             </div>
         </div>
     );
