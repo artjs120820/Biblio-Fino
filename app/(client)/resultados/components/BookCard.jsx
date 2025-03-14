@@ -12,7 +12,7 @@ export default function BookCard({ book, filters }) {
                 backgroundSize: "cover",
                 backgroundPosition: "center",
             }}
-            onClick={() => console.log(`Clic en la tarjeta de ${book.Titulo}`)} // Simula navegación o acción
+            onClick={() => console.log(`Clic en la tarjeta de ${book.Titulo}`)} 
         >
             <div className="absolute inset-0 bg-black bg-opacity-75 flex items-center py-4 px-6 gap-5 rounded-lg">
                 <div className="flex-shrink-0 transform transition-transform duration-300 ease-in-out group-hover:scale-110">
@@ -45,7 +45,7 @@ export default function BookCard({ book, filters }) {
                             <Link
                                 href={`/${user.tipo === "admin" ? "editarLibro" : "reservaLibro"}/${encodeURIComponent(book.Titulo)}`}
                                 className="bg-teal-800 text-white px-4 py-2 rounded-full hover:bg-teal-600 transition cursor-pointer"
-                                onClick={(e) => e.stopPropagation()} // Evita que se active el click de la tarjeta
+                                onClick={(e) => e.stopPropagation()} 
                             >
                                 {user.tipo === "admin" ? "Editar Libro" : "Reservar Libro"}
                             </Link>

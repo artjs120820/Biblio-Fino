@@ -8,26 +8,32 @@ export function UserProvider({ children }) {
   const [user, setUser] = useState(null);
   const [filters, setFilters] = useState({ authors: false, series: false, isbn: false });
   const [filteredBooks, setFilteredBooks] = useState([]);
+
   useEffect(() => {
     try {
       const storedUser = localStorage.getItem("user");
-      setUser(storedUser && storedUser !== "undefined" ? JSON.parse(storedUser) : null);
-  
+      setUser(storedUser ? JSON.parse(storedUser) : null);
+
       const storedBooks = localStorage.getItem("filteredBooks");
-      setFilteredBooks(storedBooks && storedBooks !== "undefined" ? JSON.parse(storedBooks) : []);
-  
+      setFilteredBooks(storedBooks ? JSON.parse(storedBooks) : []);
+
       const storedFilters = localStorage.getItem("filters");
-      setFilters(storedFilters && storedFilters !== "undefined" ? JSON.parse(storedFilters) : { authors: false, series: false, isbn: false });
+      setFilters(storedFilters ? JSON.parse(storedFilters) : { authors: false, series: false, isbn: false });
     } catch (error) {
-      console.error("Error parsing localStorage data:", error);
+      console.error("Error al cargar datos desde localStorage:", error);
       setUser(null);
       setFilteredBooks([]);
       setFilters({ authors: false, series: false, isbn: false });
     }
   }, []);
-  
-  
-  
+
+  useEffect(() => {
+    if (user) {
+      localStorage.setItem("user", JSON.stringify(user));
+    } else {
+      localStorage.removeItem("user");
+    }
+  }, [user]);
 
   const updateFilters = (newFilters) => {
     setFilters(newFilters);
@@ -40,8 +46,8 @@ export function UserProvider({ children }) {
   };
 
   const logout = () => {
-    setUser(null); 
-    localStorage.removeItem("user"); 
+    setUser(null);
+    localStorage.removeItem("user");
   };
 
   return (

@@ -1,7 +1,7 @@
 "use client";
 
 import "../globals.css";
-import { useState } from "react";
+import { useState , useEffect} from "react";
 import Header from "./components/Header";
 import Lateral from "./components/Lateral";
 

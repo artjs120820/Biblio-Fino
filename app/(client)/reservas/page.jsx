@@ -4,7 +4,7 @@ import { useState, useContext } from "react";
 import { useUser } from "../../context/UserContext";
 import LoginModal from "../../(empty)/login/page";
 import LibroCard from "./components/LibroCard";
-import Link from "next/link";  // Importa Link de Next.js
+import Link from "next/link"; 
 
 export default function Page() {
     const [mostrarLogin, setMostrarLogin] = useState(false);

@@ -16,7 +16,6 @@ export default function Agregar() {
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log({ titulo, autor, genero, isbn, anio, idioma, editorial, paginas, imagen });
-        // Lógica para enviar los datos a la API o base de datos
     };
 
     const handleImageChange = (e) => {

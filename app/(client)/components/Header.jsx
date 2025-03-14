@@ -5,15 +5,18 @@ import { Menu, User } from "lucide-react";
 import { motion } from "framer-motion";
 import LoginModal from "../../(empty)/login/page";
 import { useUser } from "../../context/UserContext";
+import { useToken } from "../../context/tokenContext";  
+
 
 export default function Header({ setSidebarOpen, sidebarOpen }) {
     const [showLogin, setShowLogin] = useState(false);
     const { user, logout } = useUser();
+    const { tokenData, cerrarSesion } = useToken();
+
     const [dropdownOpen, setDropdownOpen] = useState(false);
 
     const handleLogout = () => {
-        document.cookie = "auth_token=; path=/; max-age=0";
-        logout();
+        cerrarSesion();
         setDropdownOpen(false);
         window.location.reload();
     };
@@ -34,13 +37,13 @@ export default function Header({ setSidebarOpen, sidebarOpen }) {
                     </button>
 
                     <h1 className="text-xl font-semibold">Biblioteca</h1>
-                    {user ? (
+                    {tokenData ? (
                         <div className="relative">
                             <button
                                 className="text-white font-semibold"
                                 onClick={() => setDropdownOpen(!dropdownOpen)}
                             >
-                                Bienvenido, {user.correo}
+                                Bienvenido, {tokenData.correo || "Usuario"}
                             </button>
 
                             {dropdownOpen && (
@@ -48,8 +51,7 @@ export default function Header({ setSidebarOpen, sidebarOpen }) {
                                     initial={{ opacity: 0, y: -10 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     exit={{ opacity: 0, y: -10 }}
-                                    className="absolute right-0 mt-2 w-48 bg-gray-800 shadow-lg rounded-md z-50" 
-                                    style={{ pointerEvents: "auto" }}
+                                    className="absolute right-0 mt-2 w-48 bg-gray-800 shadow-lg rounded-md z-50"
                                 >
                                     <button
                                         className="block w-full text-left px-4 py-2 text-white hover:bg-gray-700"
@@ -59,7 +61,6 @@ export default function Header({ setSidebarOpen, sidebarOpen }) {
                                     </button>
                                 </motion.div>
                             )}
-
                         </div>
                     ) : (
                         <button onClick={() => setShowLogin(true)}>

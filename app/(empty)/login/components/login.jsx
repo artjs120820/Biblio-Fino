@@ -1,12 +1,7 @@
 import { useState } from "react";
 import { useUser } from "../../../context/UserContext";
-import ciudadanoApi from "../../../api/ciudadano"; // Importamos la API
-
-
-const usuario = {
-  correo: "arturosilvera@gmail.com",
-  contra: "123456",
-};
+import { useToken } from "../../../context/tokenContext"; 
+import ciudadanoApi from "../../../api/ciudadano";
 
 export default function LoginForm({ setShowRegister, handleClose }) {
   const { setUser } = useUser();
@@ -17,19 +12,15 @@ export default function LoginForm({ setShowRegister, handleClose }) {
 
   const handleLogin = async () => {
     try {
-      const response = await ciudadanoApi.login(email, password); // Llamamos a la API
+      const response = await ciudadanoApi.login(email, password);
 
-      if (response && response.status === 200) {
-        const data = response.data;
+      if (response?.status === 200) {
         setSuccessMessage("Inicio de sesión exitoso. Cerrando...");
+        document.cookie = `sessionToken=${response.data.token}; path=/; Secure; SameSite=Strict; max-age=1209600`;
 
         setTimeout(() => {
           handleClose();
-          localStorage.setItem("user", JSON.stringify(data.usuario));
-
-          const encodedUserInfo = btoa(JSON.stringify(data));
-          document.cookie = `auth_token=${encodedUserInfo}; path=/; max-age=2592000; Secure`;
-          setUser(data.usuario);
+          window.location.reload();
         }, 2000);
       } else {
         setError(response?.data?.error || "Correo o contraseña incorrectos");
@@ -38,6 +29,7 @@ export default function LoginForm({ setShowRegister, handleClose }) {
       setError("Hubo un error al intentar iniciar sesión. Inténtalo nuevamente.");
     }
   };
+
   return (
     <>
       <h2 className="text-3xl font-bold mb-6">Sistema de reserva de libros</h2>

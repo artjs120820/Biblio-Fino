@@ -1,32 +1,11 @@
 "use client";
-import {useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import BookCard from "./BookCard";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function ResultsCarousel({ onBack, filters, data, searchTerm, page, totalPages }) {
     const router = useRouter();
-    const [isNext, setIsNext] = useState(true); // true para siguiente, false para anterior
-
-    const itemVariantsNext = {
-        hidden: { opacity: 0, x: 100 }, // Inicia invisible y desplazado a la derecha
-        visible: { opacity: 1, x: 0 }, // Termina visible y en su posición original
-    };
-
-    const itemVariantsPrev = {
-        hidden: { opacity: 0, x: -100 }, // Inicia invisible y desplazado a la izquierda
-        visible: { opacity: 1, x: 0 }, // Termina visible y en su posición original
-    };
-    useEffect(() => {
-        if (page > totalPages) {
-            router.replace(`/resultados/${encodeURIComponent(searchTerm)}?page=${totalPages}`);
-        } else if (page < 1) {
-            router.replace(`/resultados/${encodeURIComponent(searchTerm)}?page=1`);
-        } else {
-            router.replace(`/resultados/${encodeURIComponent(searchTerm)}?page=${page}`);
-        }
-    }, [page, totalPages, router, searchTerm]);
-
     const setPageWithUrl = (newPage) => {
         if (isNaN(newPage) || newPage < 1) return;
         router.push(`/resultados/${encodeURIComponent(searchTerm)}?page=${newPage}`);
@@ -36,15 +15,8 @@ export default function ResultsCarousel({ onBack, filters, data, searchTerm, pag
         router.push(`/${encodeURIComponent(book.Titulo)}`);
     };
 
-    const nextPage = () => {
-        setIsNext(true); // Indica que estamos yendo a la siguiente página
-        setPageWithUrl(page + 1);
-    };
-
-    const prevPage = () => {
-        setIsNext(false); // Indica que estamos yendo a la página anterior
-        setPageWithUrl(page - 1);
-    };
+    const nextPage = () => setPageWithUrl(page + 1);
+    const prevPage = () => setPageWithUrl(page - 1);
     return (
         <>
             {data.length === 0 ? (
@@ -73,17 +45,17 @@ export default function ResultsCarousel({ onBack, filters, data, searchTerm, pag
                         >
                             <div className="relative overflow-hidden w-full mt-6 mb-12">
                                 <AnimatePresence>
-                                    <div className="flex">
+                                    <div className="flex flex-wrap justify-start">
+
                                         {data.map((book, index) => (
                                             <motion.div
                                                 key={index}
                                                 className="w-1/3 flex-shrink-0 px-4"
                                                 onClick={() => handleBookClick(book)}
-                                                variants={isNext ? itemVariantsNext : itemVariantsPrev} // Usa las variantes correctas
-                                                initial="hidden"
-                                                animate="visible"
-                                                exit="hidden" // Animación al salir
-                                                transition={{ duration: 0.5, delay: index * 0.1 }} // Retraso para un efecto escalonado
+                                                initial={{ opacity: 0, y: -30, scale: 0.9 }}
+                                                animate={{ opacity: 1, y: 0, scale: 1 }}
+                                                exit={{ opacity: 0, y: -30, scale: 0.9 }}
+                                                transition={{ duration: 0.3, ease: "easeInOut"}}
                                             >
                                                 <BookCard book={book} filters={filters} />
                                             </motion.div>
@@ -129,42 +101,3 @@ export default function ResultsCarousel({ onBack, filters, data, searchTerm, pag
         </>
     );
 }
-// const router = useRouter();
-
-// const itemsPerPage = 3;
-// const [books, setBooks] = useState(data);
-
-// useEffect(() => {
-//     if (data.length > 0) {
-//         setBooks(data);
-//         localStorage.setItem("filteredBooks", JSON.stringify(data));
-//     } else {
-//         const storedBooks = localStorage.getItem("filteredBooks");
-//         if (storedBooks) {
-//             setBooks(JSON.parse(storedBooks));
-//         }
-//     }
-// }, [data]);
-
-// const totalPages = Math.max(1, Math.ceil(books.length / itemsPerPage));
-// useEffect(() => {
-//     if (page > totalPages) {
-//         router.replace(`/resultados/${encodeURIComponent(searchTerm)}?page=${totalPages}`);
-//     } else if (page < 1) {
-//         router.replace(`/resultados/${encodeURIComponent(searchTerm)}?page=1`);
-//     } else {
-//         router.replace(`/resultados/${encodeURIComponent(searchTerm)}?page=${page}`);
-//     }
-// }, [page, totalPages, router, searchTerm]);
-
-// const setPageWithUrl = (newPage) => {
-//     if (isNaN(newPage) || newPage < 1) return;
-//     router.push(`/resultados/${encodeURIComponent(searchTerm)}?page=${newPage}`);
-// };
-
-// const handleBookClick = (book) => {
-//     router.push(`/${encodeURIComponent(book.Titulo)}`);
-// };
-
-// const nextPage = () => setPageWithUrl(page + 1);
-// const prevPage = () => setPageWithUrl(page - 1);
