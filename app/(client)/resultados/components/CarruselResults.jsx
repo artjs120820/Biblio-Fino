@@ -14,7 +14,7 @@ export default function ResultsCarousel({ onBack, data, searchTerm, page, totalP
     };
 
     const handleBookClick = (book) => {
-        router.push(`/${encodeURIComponent(book.Titulo)}`);
+        router.push(`/verLibro/${book.id}`);
     };
 
     const nextPage = () => setPageWithUrl(page + 1);
