@@ -1,31 +1,50 @@
 "use client";
 
-import { useState, useContext } from "react";
-import { useUser } from "../../context/UserContext";
+import { useState, useEffect } from "react";
 import LoginModal from "../../(empty)/login/page";
 import LibroCard from "./components/LibroCard";
-import Link from "next/link"; 
+import Link from "next/link";
+import reservasApi from "../../api/reserva";
+import { useToken } from "../../context/tokenContext";
 
 export default function Page() {
     const [mostrarLogin, setMostrarLogin] = useState(false);
-    const { user } = useUser();
-    const libros = user?.librosRegistrados || [];
+    const [libros, setLibros] = useState([]);
+    const { tokenData } = useToken();
 
-    const ultimasReservas = [...libros]
-        .filter(libro => libro.fechapedido)
-        .sort((a, b) => new Date(b.fechapedido) - new Date(a.fechapedido))
+    const obtenerReservas = async () => {
+        try {
+            if (!tokenData) return;
+            const response = await reservasApi.obtenerReservas(tokenData.id);
+            if (response?.status === 200) {
+                setLibros(response.data.reservas || []);
+                console.log(response.data.reservas)
+            } else {
+                console.error("Error al obtener reservas:", response?.data?.error || "Error desconocido");
+            }
+        } catch (error) {
+            console.error("Error obteniendo reservas:", error);
+        }
+    };
+
+    useEffect(() => {
+        obtenerReservas();
+    }, [tokenData]);
+     const ultimasReservas = [...libros]
+        .filter(libro => libro.fecha_reserva)
+        .sort((a, b) => new Date(b.fecha_reserva) - new Date(a.fecha_reserva))
         .slice(0, 3);
 
     const proximosVencer = [...libros]
-        .filter(libro => libro.fechavencimiento)
-        .sort((a, b) => new Date(a.fechavencimiento) - new Date(b.fechavencimiento))
+        .filter(libro => libro.fecha_vencimiento)
+        .sort((a, b) => new Date(a.fecha_vencimiento) - new Date(b.fecha_vencimiento))
         .slice(0, 3);
 
     return (
         <div className="flex flex-col items-start justify-center w-full">
-            {user ? (
+            {tokenData ? (
                 <>
-                    <h1 className="text-3xl font-bold mb-4">Bienvenido, {user.nombre}</h1>
+                    <h1 className="text-3xl font-bold mb-4">Bienvenido, {tokenData.nombre}</h1>
 
                     <div className="w-full flex flex-col gap-6">
                         <section className="bg-gray-100 p-6 rounded-lg shadow-md w-full">
