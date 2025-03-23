@@ -37,7 +37,7 @@ export default function LoginModal({ showLogin, setShowLogin }) {
             ${isClosing ? "animate-fadeOut" : "animate-fadeIn"}`}
     >
       <div
-        className={`bg-white p-8 rounded-lg shadow-lg w-96 text-center relative border-2 
+        className={`bg-white p-8 rounded-lg shadow-lg w-96 text-center relative
                 ${isClosing ? "animate-scaleOut" : "animate-scaleIn"}`} 
       >
         <button
