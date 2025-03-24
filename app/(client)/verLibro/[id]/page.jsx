@@ -1,15 +1,15 @@
 "use client";
 import { useParams, useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
-import { useUser } from "../../../context/UserContext";
+import { useToken } from "../../../context/tokenContext";
 import Link from "next/link";
 import ApiCopia from "../../../api/copia";
 
 export default function BookInfo() {
-    const { user } = useUser();
     const { id } = useParams();
     const idCopia = decodeURIComponent(id);
     const router = useRouter();
+    const { tokenData } = useToken();
 
     const [book, setBook] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -91,12 +91,12 @@ export default function BookInfo() {
                     >
                         ⬅ Volver
                     </button>
-                    {user?.tipo && ["admin", "usuario"].includes(user.tipo) && (
+                    {tokenData?.tipo_usuario && ["administrador", "usuario"].includes(tokenData.tipo_usuario) && (
                         <Link
-                            href={`/${user.tipo === "admin" ? "editarLibro" : "reservaLibro"}/${encodeURIComponent(book.libro.titulo)}`}
+                            href={`/${tokenData.tipo_usuario === "administrador" ? "editarLibro" : "reservaLibro"}/${encodeURIComponent(book.libro.titulo)}`}
                             className="bg-teal-800 text-white px-6 py-2 rounded-full hover:bg-teal-600 transition font-semibold text-center w-full sm:w-auto"
                         >
-                            {user.tipo === "admin" ? "Editar Libro" : "Reservar Libro"}
+                            {tokenData.tipo_usuario === "administrador" ? "Editar Libro" : "Reservar Libro"}
                         </Link>
                     )}
                 </div>

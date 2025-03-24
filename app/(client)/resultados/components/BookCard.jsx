@@ -1,9 +1,8 @@
-import { useUser } from "../../../context/UserContext"
+import { useToken } from "../../../context/tokenContext";
 import Link from "next/link";
 export default function BookCard({ book, filters }) {
-    console.log(book)
-    console.log(filters)
-    const { user } = useUser();
+    const { tokenData } = useToken();
+
     return (
         <div
             className="relative w-full h-[40vh] sm:h-[35vh] md:h-[40vh] rounded-lg cursor-pointer overflow-hidden shadow-md group"
@@ -41,14 +40,14 @@ export default function BookCard({ book, filters }) {
                         <p className="text-sm max-[1406px]:text-xs font-extrabold text-white-200">ISBN: <span className="text-white-200 font-normal">{book.isbn}</span></p>
                     )}
 
-                    {user?.tipo && ["admin", "usuario"].includes(user.tipo) && (
+                    {tokenData?.tipo_usuario && ["administrador", "usuario"].includes(tokenData.tipo_usuario) && (
                         <div className="mt-5">
                             <Link
-                                href={`/${user.tipo === "admin" ? "editarLibro" : "reservaLibro"}/${encodeURIComponent(book.Titulo)}`}
+                                href={`/${tokenData.tipo_usuario === "administrador" ? "editarLibro" : "reservaLibro"}/${encodeURIComponent(book.libro.titulo)}`}
                                 className="bg-cyan-700 text-white px-4 py-2 rounded-full hover:bg-cyan-500 transition cursor-pointer shadow-md hover:shadow-lg"
                                 onClick={(e) => e.stopPropagation()}
                             >
-                                {user.tipo === "admin" ? "Editar Libro" : "Reservar Libro"}
+                                {tokenData.tipo_usuario === "administrador" ? "Editar Libro" : "Reservar Libro"}
                             </Link>
                         </div>
                     )}

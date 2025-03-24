@@ -1,31 +1,40 @@
 "use client";
 
-import { useUser } from "../../../context/UserContext";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useToken } from "../../../context/tokenContext";
+import usuariosApi from "../../../api/usuario";
 
 export default function EditarPerfil() {
-    const { user } = useUser();
+    const { tokenData } = useToken();
+    const [datosUsuario, setUsuario] = useState(null);
 
-    if (!user) {
-        return (
-            <div className="flex flex-col items-center justify-center min-h-screen text-center">
-                <h1 className="text-3xl font-bold mb-4">⚠ No has iniciado sesión</h1>
-                <p className="text-gray-600">Por favor, inicia sesión para editar tu perfil.</p>
-            </div>
-        );
-    }
+    useEffect(() => {
+        if (tokenData) {
+            obtenerUsuario();
+        }
+    }, [tokenData]);
 
-    const [nombre, setNombre] = useState(user.nombre || "");
-    const [correo, setCorreo] = useState(user.correo || "");
-    const [descripcion, setDescripcion] = useState(user.descripcion || "");
-    const [foto, setFoto] = useState(user.foto || "/busqueda/default.jpg");
+    const obtenerUsuario = async () => {
+        try {
+            const response = await usuariosApi.obtenerDatosCiudadano(tokenData.id);
+            if (response?.status === 200) {
+                setUsuario(response.data);
+            } else {
+                console.error("Error al obtener el usuario:", response?.data?.error || "Error desconocido");
+            }
+        } catch (error) {
+            console.error("Error obteniendo el usuario:", error);
+        }
+    };
+
+
     const [fotoFile, setFotoFile] = useState(null);
 
     const handleFileChange = (e) => {
         const file = e.target.files[0];
         if (file) {
-            setFoto(URL.createObjectURL(file));
+            setUsuario((prev) => ({ ...prev, foto: URL.createObjectURL(file) }));
             setFotoFile(file);
         }
     };
@@ -33,11 +42,22 @@ export default function EditarPerfil() {
     const handleGuardar = () => {
         alert("✅ Perfil actualizado con éxito");
     };
+    if (!tokenData) {
+        return (
+            <div className="flex flex-col items-center justify-center text-center">
+                <h1 className="text-3xl font-bold mb-4">⚠ No has iniciado sesión</h1>
+                <p className="text-gray-600">Por favor, inicia sesión para ver tu perfil.</p>
+            </div>
+        );
+    }
 
+    if (!datosUsuario) {
+        return <p className="text-center text-gray-500">Cargando datos...</p>;
+    }
     return (
         <>
             <div className="flex items-center mb-6 justify-between ">
-                <h1 className="text-4xl font-bold">Hola, {nombre} 👋</h1>
+                <h1 className="text-4xl font-bold">Hola, {datosUsuario.ciudadano.nombre} 👋</h1>
                 <Link
                     href="/perfil"
                     className="bg-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-400 transition"
@@ -47,7 +67,7 @@ export default function EditarPerfil() {
             </div>
             <div className="mx-auto flex flex-row items-center gap-6">
                 <div className="relative flex-shrink-0 w-[350px] h-[300px] border-4 border-gray-300 rounded-xl overflow-hidden flex items-center justify-center">
-                    <img src={foto} alt="Foto de perfil" className="w-full h-full object-cover" />
+                    <img src={datosUsuario.usuario.foto_url || "/busqueda/default.jpg"} alt="Foto de perfil" className="w-full h-full object-cover" />
                     <label className="absolute inset-0 p-10 text-center bg-black/50 flex items-center justify-center text-white text-lg font-semibold opacity-0 hover:opacity-100 transition-opacity cursor-pointer">
                         Para cambiar la imagen, da clic
                         <input type="file" accept="image/*" className="hidden" onChange={handleFileChange} />
@@ -60,7 +80,7 @@ export default function EditarPerfil() {
                     <input
                         type="text"
                         className="w-full p-2 border border-gray-300 rounded-lg mb-4"
-                        value={nombre}
+                        value={datosUsuario.ciudadano.nombre}
                         onChange={(e) => setNombre(e.target.value)}
                     />
 
@@ -68,7 +88,7 @@ export default function EditarPerfil() {
                     <input
                         type="email"
                         className="w-full p-2 border border-gray-300 rounded-lg mb-4"
-                        value={correo}
+                        value={datosUsuario.ciudadano.correo}
                         onChange={(e) => setCorreo(e.target.value)}
                     />
 
@@ -76,7 +96,7 @@ export default function EditarPerfil() {
                     <textarea
                         className="w-full p-2 border border-gray-300 rounded-lg mb-4 resize-none"
                         rows="3"
-                        value={descripcion}
+                        value={datosUsuario.usuario.descripcion}
                         onChange={(e) => setDescripcion(e.target.value)}
                     ></textarea>
 
