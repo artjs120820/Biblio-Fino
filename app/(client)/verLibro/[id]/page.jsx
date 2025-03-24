@@ -10,7 +10,7 @@ export default function BookInfo() {
     const idCopia = decodeURIComponent(id);
     const router = useRouter();
     const { tokenData } = useToken();
-
+    //hola
     const [book, setBook] = useState(null);
     const [loading, setLoading] = useState(true);
 
