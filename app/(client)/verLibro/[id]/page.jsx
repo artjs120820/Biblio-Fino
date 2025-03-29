@@ -93,7 +93,7 @@ export default function BookInfo() {
                     </button>
                     {tokenData?.tipo_usuario && ["administrador", "usuario"].includes(tokenData.tipo_usuario) && (
                         <Link
-                            href={`/${tokenData.tipo_usuario === "administrador" ? "editarLibro" : "reservaLibro"}/${encodeURIComponent(book.libro.titulo)}`}
+                            href={`/${tokenData.tipo_usuario === "administrador" ? "editarLibro" : "reservaLibro"}/${encodeURIComponent(book.id)}`}
                             className="bg-teal-800 text-white px-6 py-2 rounded-full hover:bg-teal-600 transition font-semibold text-center w-full sm:w-auto"
                         >
                             {tokenData.tipo_usuario === "administrador" ? "Editar Libro" : "Reservar Libro"}

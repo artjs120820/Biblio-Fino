@@ -2,8 +2,8 @@
 import { useParams, useRouter } from "next/navigation";
 
 export default function BookInfo() {
-    const { titulo } = useParams();
-    const decodedTitulo = decodeURIComponent(titulo);
+    const { id } = useParams();
+    const decodedId = decodeURIComponent(id);
     const router = useRouter();
     return (
         <>
@@ -13,7 +13,7 @@ export default function BookInfo() {
             >
                 Volver
             </button>
-            <h1>Reserva tu Libro - {decodedTitulo}</h1>
+            <h1>Reserva tu Libro - {decodedId}</h1>
         </>
     )
 }

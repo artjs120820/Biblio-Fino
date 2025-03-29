@@ -43,7 +43,7 @@ export default function BookCard({ book, filters }) {
                     {tokenData?.tipo_usuario && ["administrador", "usuario"].includes(tokenData.tipo_usuario) && (
                         <div className="mt-5">
                             <Link
-                                href={`/${tokenData.tipo_usuario === "administrador" ? "editarLibro" : "reservaLibro"}/${encodeURIComponent(book.libro.titulo)}`}
+                                href={`/${tokenData.tipo_usuario === "administrador" ? "editarLibro" : "reservaLibro"}/${encodeURIComponent(book.id)}`}
                                 className="bg-cyan-700 text-white px-4 py-2 rounded-full hover:bg-cyan-500 transition cursor-pointer shadow-md hover:shadow-lg"
                                 onClick={(e) => e.stopPropagation()}
                             >

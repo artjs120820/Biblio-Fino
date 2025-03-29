@@ -1,4 +1,4 @@
-export default function LibroCard({ libro }) {
+export default function LibroCard({ libro, tipo }) {
     const formatearFecha = (fecha) => {
         const fechaObj = new Date(fecha);
         const dia = fechaObj.getDate().toString().padStart(2, "0");
@@ -6,7 +6,7 @@ export default function LibroCard({ libro }) {
         const año = fechaObj.getFullYear();
         const horas = fechaObj.getHours().toString().padStart(2, "0");
         const minutos = fechaObj.getMinutes().toString().padStart(2, "0");
-    
+
         return `${dia}/${mes}/${año}, ${horas}:${minutos}`;
     };
     return (
@@ -28,6 +28,11 @@ export default function LibroCard({ libro }) {
                 <p className="text-gray-600">Autor: {libro.libro.autor}</p>
                 <p className="text-gray-500 text-sm">📅 Reserva: {formatearFecha(libro.fecha_reserva)}</p>
                 <p className="text-gray-500 text-sm">⏳ Vence: {formatearFecha(libro.fecha_vencimiento)}</p>
+                {tipo === "administrador" && (
+                    <p className="text-gray-600 text-sm bg-blue-50 px-3 py-1 rounded-lg">
+                        👤 <span className="font-medium">Usuario:</span> {libro.usuario.correo}
+                    </p>
+                )}
             </div>
         </div>
     );

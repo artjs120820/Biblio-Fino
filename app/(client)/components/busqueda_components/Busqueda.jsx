@@ -1,6 +1,7 @@
 import Aviso from "../../components/Aviso"
 import { useState } from "react";
 import Link from "next/link";
+import { useToken } from "../../../context/tokenContext";
 import { useUser } from "../../../context/UserContext";
 
 
@@ -9,7 +10,7 @@ export default function SearchPage() {
     const [searchTerm, setSearchTerm] = useState("");
     const { filters, updateFilters } = useUser();
     const [avisoVisible, setAvisoVisible] = useState(false);
-    const { user } = useUser();
+    const { tokenData } = useToken();
     const handleClear = () => {
         setSearchTerm("");
         updateFilters({ authors: false, genero: false, isbn: false });
@@ -26,7 +27,7 @@ export default function SearchPage() {
         <div>
             <div className="flex flex-row justify-between items-center mb-4">
                 <h1 className="text-2xl font-bold">Búsqueda</h1>
-                {user?.tipo === "admin" ? (
+                {tokenData?.tipo_usuario === "administrador" ? (
                     <Link href="/agregarLibro" className="bg-teal-800 text-white px-4 py-2 rounded-full hover:bg-teal-600 transition">
                         Añadir un nuevo recurso
                     </Link>
